@@ -1,4 +1,4 @@
-#include "library.h"
+#include "library.hpp"
 
 #include <iostream>
 #include <GLFW/glfw3.h>
