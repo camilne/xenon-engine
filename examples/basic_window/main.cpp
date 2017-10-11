@@ -1,4 +1,4 @@
-#include "library.hpp"
+#include "Window.hpp"
 
 #include <iostream>
 #include <GLFW/glfw3.h>
@@ -10,23 +10,16 @@ void errorCallback(int error, const char* description) {
 int main(int argc, char* argv[]) {
     glfwSetErrorCallback(errorCallback);
 
-    GLFWwindow* window = createWindow();
-    if (!window) {
-        return 0;
-    }
+    xe::Window window(1280, 720, "My Basic Window");
 
     // Set the clear color to a nice green
     glClearColor(0.15f, 0.6f, 0.4f, 1.0f);
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!window.shouldClose()) {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        window.update();
     }
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
 
     return 0;
 }

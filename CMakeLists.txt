@@ -5,13 +5,16 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
-set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-file(GLOB_RECURSE INCLUDES ${INCLUDE_DIR}/*.hpp)
-set(SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-file(GLOB_RECURSE SOURCES ${SOURCES_DIR}/*.cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+file(GLOB_RECURSE INCLUDES include/*.hpp)
+file(GLOB_RECURSE SOURCES src/*.cpp)
 set(SOURCE_FILES ${INCLUDES} ${SOURCES})
 add_library(Xenon STATIC ${SOURCE_FILES})
 target_include_directories(Xenon PUBLIC ${INCLUDE_DIR})
+
+# Opengl
+find_package(OpenGL REQUIRED)
+target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
 
 # GLFW
 set(GLFW_DIR "${LIB_DIR}/glfw")
