@@ -4,9 +4,14 @@
 
 namespace xe {
 
+Window::Window()
+        : handle_{nullptr}, width_{kDefaultWidth}, height_{kDefaultHeight}, title_{kDefaultTitle} {
+}
+
 Window::Window(int width, int height, const std::string& title)
         : handle_{nullptr}, width_{width}, height_{height}, title_{title} {
     init();
+    createWindowHandle();
 }
 
 Window::~Window() {
@@ -40,6 +45,10 @@ void Window::init() {
         // System::exit(1);
         std::cout << "Unable to initialize GLFW" << std::endl;
     }
+}
+
+void Window::createWindowHandle() {
+    init();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -52,6 +61,7 @@ void Window::init() {
         // System::exit(1);
         std::cout << "Unable to create GLFW window" << std::endl;
         glfwTerminate();
+        return;
     }
 
     glfwMakeContextCurrent(handle_);
