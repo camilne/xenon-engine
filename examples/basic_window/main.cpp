@@ -1,7 +1,7 @@
+#include <GLFW/glfw3.h>
+
 #include "Window.hpp"
 
-#include <iostream>
-#include <GLFW/glfw3.h>
 
 void errorCallback(int error, const char* description) {
     fprintf(stderr, "GLFW error %d: %s\n", error, description);

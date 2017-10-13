@@ -34,4 +34,16 @@ target_include_directories("glad" PRIVATE "${GLAD_DIR}/include")
 target_include_directories(${PROJECT_NAME} PUBLIC "${GLAD_DIR}/include")
 target_link_libraries(${PROJECT_NAME} "glad" "${CMAKE_DL_LIBS}")
 
+# examples
 add_subdirectory(examples)
+
+# tests
+add_subdirectory(${LIB_DIR}/googletest/googletest)
+enable_testing()
+set(PROJECT_TEST_NAME Xenon_test)
+include_directories(${LIB_DIR}/googletest/googletest/include)
+file(GLOB_RECURSE TEST_SRC_FILES test/*.cpp)
+add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
+target_link_libraries(${PROJECT_TEST_NAME} Xenon gtest)
+
+add_test(test1 ${PROJECT_TEST_NAME})
