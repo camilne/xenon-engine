@@ -6,21 +6,21 @@
 
 namespace xe {
 
-    class Window {
-    public:
-        Window(int width, int height, const std::string& title);
-        ~Window();
+class Window {
+public:
+    Window(int width, int height, const std::string& title);
+    ~Window();
 
-        bool shouldClose() const;
-        void update() const;
-    private:
-        GLFWwindow* m_handle;
-        int m_width;
-        int m_height;
-        std::string m_title;
+    bool shouldClose() const;
+    void update() const;
+private:
+    GLFWwindow* handle_;
+    int width_;
+    int height_;
+    std::string title_;
 
-        void init();
-    };
+    void init();
+};
 
 }
 
