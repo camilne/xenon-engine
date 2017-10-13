@@ -9,13 +9,10 @@ namespace xe {
 
 class Window {
 public:
-    Window();
     Window(int width, int height, const std::string& title);
     ~Window();
 
     static void setErrorCallback(GLFWerrorfun callback);
-
-    static void init();
 
     bool shouldClose() const;
     void update() const;
@@ -23,15 +20,12 @@ public:
     int getWidth() const;
     int getHeight() const;
 private:
-    const int kDefaultWidth = 640;
-    const int kDefaultHeight = 480;
-    const std::string kDefaultTitle = "";
-
     GLFWwindow* handle_;
     int width_;
     int height_;
     std::string title_;
 
+    void init();
     void createWindowHandle();
 };
 

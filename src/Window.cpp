@@ -4,10 +4,6 @@
 
 namespace xe {
 
-Window::Window()
-        : handle_{nullptr}, width_{kDefaultWidth}, height_{kDefaultHeight}, title_{kDefaultTitle} {
-}
-
 Window::Window(int width, int height, const std::string& title)
         : handle_{nullptr}, width_{width}, height_{height}, title_{title} {
     init();
