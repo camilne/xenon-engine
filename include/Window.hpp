@@ -3,6 +3,7 @@
 
 #include <GLFW/glfw3.h>
 #include <string>
+#include <functional>
 
 namespace xe {
 
@@ -11,8 +12,13 @@ public:
     Window(int width, int height, const std::string& title);
     ~Window();
 
+    static void setErrorCallback(GLFWerrorfun callback);
+
     bool shouldClose() const;
     void update() const;
+
+    int getWidth() const;
+    int getHeight() const;
 private:
     GLFWwindow* handle_;
     int width_;

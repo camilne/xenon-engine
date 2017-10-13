@@ -13,6 +13,10 @@ Window::~Window() {
     glfwTerminate();
 }
 
+void Window::setErrorCallback(GLFWerrorfun callback) {
+    glfwSetErrorCallback(callback);
+}
+
 bool Window::shouldClose() const {
     return glfwWindowShouldClose(handle_) > 0;
 }
@@ -20,6 +24,14 @@ bool Window::shouldClose() const {
 void Window::update() const {
     glfwSwapBuffers(handle_);
     glfwPollEvents();
+}
+
+int Window::getWidth() const {
+    return width_;
+}
+
+int Window::getHeight() const {
+    return height_;
 }
 
 void Window::init() {
