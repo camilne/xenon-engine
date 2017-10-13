@@ -2,6 +2,7 @@
 #define XENON_ENGINE_HPP
 
 #include <memory>
+#include <glad/glad.h>
 #include "Window.hpp"
 
 namespace xe {
@@ -14,6 +15,7 @@ public:
     void run();
 private:
     std::unique_ptr<Window> window_;
+    GLuint frameMesh_;
 
     static void kDefaultErrorFun(int error, const char* description);
 };
