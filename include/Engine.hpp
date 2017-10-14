@@ -4,7 +4,7 @@
 #include <memory>
 #include <glad/glad.h>
 #include "Window.hpp"
-#include "Renderer.hpp"
+#include "IRenderer.hpp"
 
 namespace xe {
 
@@ -13,11 +13,11 @@ public:
     Engine();
 
     void createWindow(int width, int height, std::string title);
-    void attachRenderer(const std::function<void()>& renderFunction);
+    void attachRenderer(IRenderer* renderer);
     void run();
 private:
     std::unique_ptr<Window> window_;
-    std::unique_ptr<Renderer> renderer_;
+    IRenderer* renderer_;
     GLuint frameMesh_;
 
     static void kDefaultErrorFun(int error, const char* description);

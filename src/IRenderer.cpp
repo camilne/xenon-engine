@@ -1,16 +1,16 @@
 #include <iostream>
-#include "Renderer.hpp"
+#include "IRenderer.hpp"
 
-xe::Renderer::Renderer(int width, int height, const std::function<void()>& renderFunction)
-        : width_{width}, height_{height}, renderFunction_(renderFunction) {
+xe::IRenderer::IRenderer(int width, int height)
+        : width_{width}, height_{height} {
     init();
 }
 
-GLuint xe::Renderer::getFrame() const {
+GLuint xe::IRenderer::getFrame() const {
     return renderedTexture_;
 }
 
-void xe::Renderer::init() {
+void xe::IRenderer::init() {
     glGenFramebuffers(1, &frameBuffer_);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer_);
 
@@ -31,11 +31,11 @@ void xe::Renderer::init() {
     }
 }
 
-void xe::Renderer::renderScene() {
+void xe::IRenderer::renderScene() {
     glViewport(0, 0, width_, height_);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer_);
 
-    renderFunction_();
+    render();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
