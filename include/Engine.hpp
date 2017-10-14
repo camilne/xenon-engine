@@ -18,7 +18,6 @@ public:
 private:
     std::unique_ptr<Window> window_;
     std::unique_ptr<IRenderer> renderer_;
-    GLuint frameMesh_;
 
     static void kDefaultErrorFun(int error, const char* description);
 };

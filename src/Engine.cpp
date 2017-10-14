@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 #include <iostream>
+#include <Shader.hpp>
 
 namespace xe {
 
@@ -19,35 +20,44 @@ void Engine::run() {
     if(!window_ || !renderer_)
         return;
 
-    glEnable(GL_TEXTURE_2D);
-
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
     glBindVertexArray(VertexArrayID);
 
-    glGenBuffers(1, &frameMesh_);
+    GLuint frameVertices;
+    glGenBuffers(1, &frameVertices);
     const GLfloat vertices[] = {
-            0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f
     };
-    glBindBuffer(GL_ARRAY_BUFFER, frameMesh_);
+    glBindBuffer(GL_ARRAY_BUFFER, frameVertices);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // Set the clear color to a nice green
-    glClearColor(0.15f, 0.6f, 0.4f, 1.0f);
+    // TODO: Fix path hack
+    Shader shader("../../shaders/pass_through");
+
+    glClearColor(0, 0, 1, 1);
 
     while (!window_->shouldClose()) {
         renderer_->renderScene();
         GLuint frame = renderer_->getFrame();
         glBindTexture(GL_TEXTURE_2D, frame);
 
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        shader.bind();
 
         glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, frameMesh_);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, frameVertices);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)0);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        GLint error = glGetError();
+        if(error != GL_NO_ERROR)
+            std::cerr << "[opengl] Error: " << error << std::endl;
 
         window_->update();
     }

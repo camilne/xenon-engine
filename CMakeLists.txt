@@ -12,6 +12,10 @@ set(SOURCE_FILES ${INCLUDES} ${SOURCES})
 add_library(Xenon STATIC ${SOURCE_FILES})
 target_include_directories(Xenon PUBLIC ${INCLUDE_DIR})
 
+# Copy shaders
+file(GLOB SHADERS "shaders/*")
+file(COPY ${SHADERS} DESTINATION shaders)
+
 # Opengl
 find_package(OpenGL REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
