@@ -7,3 +7,6 @@ set(SOURCE_FILES main.cpp)
 add_executable(XenonBasicWindow ${SOURCE_FILES})
 
 target_link_libraries(XenonBasicWindow LINK_PUBLIC Xenon)
+
+configure_file(basic_window.vs basic_window.vs COPYONLY)
+configure_file(basic_window.fs basic_window.fs COPYONLY)
