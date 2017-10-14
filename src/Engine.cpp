@@ -1,10 +1,9 @@
 #include "Engine.hpp"
 #include <iostream>
-#include <glad/glad.h>
 
 namespace xe {
 
-Engine::Engine() : window_{nullptr} {
+Engine::Engine() : window_{nullptr}, renderer_{nullptr} {
     Window::setErrorCallback(kDefaultErrorFun);
 }
 
@@ -12,9 +11,15 @@ void Engine::createWindow(int width, int height, std::string title) {
     window_ = std::make_unique<Window>(width, height, title);
 }
 
+void Engine::attachRenderer(const std::function<void()>& renderFunction) {
+    renderer_ = std::make_unique<Renderer>(window_->getWidth(), window_->getHeight(), renderFunction);
+}
+
 void Engine::run() {
-    if(!window_)
+    if(!window_ || !renderer_)
         return;
+
+    glEnable(GL_TEXTURE_2D);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -28,7 +33,14 @@ void Engine::run() {
     glBindBuffer(GL_ARRAY_BUFFER, frameMesh_);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+    // Set the clear color to a nice green
+    glClearColor(0.15f, 0.6f, 0.4f, 1.0f);
+
     while (!window_->shouldClose()) {
+        renderer_->renderScene();
+        GLuint frame = renderer_->getFrame();
+        glBindTexture(GL_TEXTURE_2D, frame);
+
         glClear(GL_COLOR_BUFFER_BIT);
 
         glEnableVertexAttribArray(0);
