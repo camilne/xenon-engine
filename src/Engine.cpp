@@ -11,8 +11,8 @@ void Engine::createWindow(int width, int height, std::string title) {
     window_ = std::make_unique<Window>(width, height, title);
 }
 
-void Engine::attachRenderer(IRenderer* renderer) {
-    renderer_ = renderer;
+void Engine::attachRenderer(std::unique_ptr<IRenderer> renderer) {
+    renderer_ = std::move(renderer);
 }
 
 void Engine::run() {
