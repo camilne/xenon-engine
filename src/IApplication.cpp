@@ -1,16 +1,16 @@
 #include <iostream>
-#include "IRenderer.hpp"
+#include "IApplication.hpp"
 
-xe::IRenderer::IRenderer(int width, int height)
+xe::IApplication::IApplication(int width, int height)
         : width_{width}, height_{height} {
-    init();
+    initFramebuffer();
 }
 
-GLuint xe::IRenderer::getFrame() const {
+GLuint xe::IApplication::getFrame() const {
     return renderedTexture_;
 }
 
-void xe::IRenderer::init() {
+void xe::IApplication::initFramebuffer() {
     glGenFramebuffers(1, &frameBuffer_);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer_);
 
@@ -22,8 +22,8 @@ void xe::IRenderer::init() {
 
     glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture_, 0);
 
-    GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-    glDrawBuffers(1, DrawBuffers);
+    GLenum drawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    glDrawBuffers(1, drawBuffers);
 
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         // Logger::log(Logger::ERROR, "Display framebuffer is not complete");
@@ -31,11 +31,11 @@ void xe::IRenderer::init() {
     }
 }
 
-void xe::IRenderer::preRender() const {
+void xe::IApplication::preRender() const {
     glViewport(0, 0, width_, height_);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer_);
 }
 
-void xe::IRenderer::postRender() const {
+void xe::IApplication::postRender() const {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

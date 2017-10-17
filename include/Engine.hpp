@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include "Window.hpp"
 #include "IRenderer.hpp"
+#include "IApplication.hpp"
 
 namespace xe {
 
@@ -13,11 +14,11 @@ public:
     Engine();
 
     void createWindow(int width, int height, std::string title);
-    void attachRenderer(std::unique_ptr<IRenderer> renderer);
-    void run(std::function<void()> updateFunction);
+    void attachApplication(std::unique_ptr<IApplication> application);
+    void run();
 private:
     std::unique_ptr<Window> window_;
-    std::unique_ptr<IRenderer> renderer_;
+    std::unique_ptr<IApplication> application_;
 
     static void kDefaultErrorFun(int error, const char* description);
 };

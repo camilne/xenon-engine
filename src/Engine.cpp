@@ -4,7 +4,7 @@
 
 namespace xe {
 
-Engine::Engine() : window_{nullptr}, renderer_{nullptr} {
+Engine::Engine() : window_{nullptr}, application_{nullptr} {
     Window::setErrorCallback(kDefaultErrorFun);
 }
 
@@ -12,12 +12,12 @@ void Engine::createWindow(int width, int height, std::string title) {
     window_ = std::make_unique<Window>(width, height, title);
 }
 
-void Engine::attachRenderer(std::unique_ptr<IRenderer> renderer) {
-    renderer_ = std::move(renderer);
+void Engine::attachApplication(std::unique_ptr<IApplication> application) {
+    application_ = std::move(application);
 }
 
-void Engine::run(std::function<void()> updateFunction) {
-    if(!window_ || !renderer_)
+void Engine::run() {
+    if(!window_ || !application_)
         return;
 
     GLuint VertexArrayID;
@@ -38,11 +38,16 @@ void Engine::run(std::function<void()> updateFunction) {
 
     glClearColor(0, 0, 1, 1);
 
-    while (!window_->shouldClose()) {
-        updateFunction();
+    application_->init();
 
-        renderer_->renderScene();
-        GLuint frame = renderer_->getFrame();
+    while (!window_->shouldClose()) {
+        application_->update();
+
+        application_->preRender();
+        application_->render();
+        application_->postRender();
+
+        GLuint frame = application_->getFrame();
         glBindTexture(GL_TEXTURE_2D, frame);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -11,7 +11,8 @@ public:
     IRenderer(int width, int height);
 
     GLuint getFrame() const;
-    void renderScene();
+    void preRender() const;
+    void postRender() const;
 protected:
     int width_;
     int height_;
