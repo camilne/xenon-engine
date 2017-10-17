@@ -3,7 +3,7 @@ project(basic_window)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp Renderer.cpp Renderer.hpp)
+set(SOURCE_FILES main.cpp Application.cpp Application.hpp)
 add_executable(XenonBasicWindow ${SOURCE_FILES})
 
 target_link_libraries(XenonBasicWindow LINK_PUBLIC Xenon)

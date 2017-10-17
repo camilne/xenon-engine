@@ -31,7 +31,7 @@ void Application::init() {
 }
 
 void Application::update() {
-    
+
 }
 
 void Application::render() {

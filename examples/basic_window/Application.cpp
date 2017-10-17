@@ -3,25 +3,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/constants.hpp>
 #include <Shader.hpp>
-#include "Renderer.hpp"
+#include "Application.hpp"
 
-Renderer::Renderer(int width, int height)
-        : xe::IRenderer(width, height), shader_(xe::Shader("basic_window")), model_{glm::mat4(0.0f)},
+Application::Application(int width, int height)
+        : xe::IApplication(width, height), shader_(xe::Shader("basic_window")), model_{glm::mat4(0.0f)},
           view_{glm::mat4(0.0f)}, proj_{glm::mat4(0.0f)} {
-    init();
+
 }
 
-void Renderer::render() {
-    shader_.bind();
-
-    glBindBuffer(GL_ARRAY_BUFFER, mesh_);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-}
-
-void Renderer::init() {
+void Application::init() {
     glGenBuffers(1, &mesh_);
     const GLfloat vertices[] = {
             -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.75f, 0.0f
@@ -41,4 +31,18 @@ void Renderer::init() {
     shader_.setUniform("m_model", model_);
     shader_.setUniform("m_view", view_);
     shader_.setUniform("m_proj", proj_);
+}
+
+void Application::update() {
+
+}
+
+void Application::render() {
+    shader_.bind();
+
+    glBindBuffer(GL_ARRAY_BUFFER, mesh_);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
