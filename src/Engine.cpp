@@ -38,6 +38,9 @@ void Engine::run() {
 
     glClearColor(0, 0, 1, 1);
 
+    window_->setKeyCallback(IApplication::keyCallback);
+    window_->setWindowUserPointer(static_cast<void*>(application_.get()));
+
     application_->init();
 
     while (!window_->shouldClose()) {

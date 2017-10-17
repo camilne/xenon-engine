@@ -18,6 +18,14 @@ void Window::setErrorCallback(GLFWerrorfun callback) {
     glfwSetErrorCallback(callback);
 }
 
+void Window::setKeyCallback(GLFWkeyfun callback) {
+    glfwSetKeyCallback(handle_, callback);
+}
+
+void Window::setWindowUserPointer(void* pointer) const {
+    glfwSetWindowUserPointer(handle_, pointer);
+}
+
 bool Window::shouldClose() const {
     return glfwWindowShouldClose(handle_) > 0;
 }

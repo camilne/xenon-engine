@@ -13,6 +13,9 @@ public:
     ~Window();
 
     static void setErrorCallback(GLFWerrorfun callback);
+    void setKeyCallback(GLFWkeyfun callback);
+
+    void setWindowUserPointer(void* pointer) const;
 
     bool shouldClose() const;
     void update() const;

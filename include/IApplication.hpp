@@ -3,6 +3,9 @@
 
 #include <memory>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "Input.hpp"
+#include <iostream>
 
 namespace xe {
 
@@ -21,11 +24,16 @@ protected:
     virtual void init() = 0;
     virtual void update() = 0;
     virtual void render() = 0;
+
+    virtual void keyPressed(int key, int mods) {}
+    virtual void keyReleased(int key, int mods) {}
 private:
     GLuint frameBuffer_;
     GLuint renderedTexture_;
 
     void initFramebuffer();
+
+    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };
 
 }

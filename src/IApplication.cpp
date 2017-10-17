@@ -40,3 +40,14 @@ void xe::IApplication::preRender() const {
 void xe::IApplication::postRender() const {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+void xe::IApplication::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    Input::keyCallback(window, key, scancode, action, mods);
+    IApplication* app = (IApplication*)glfwGetWindowUserPointer(window);
+
+    if(action == GLFW_PRESS) {
+        app->keyPressed(key, mods);
+    } else if(action == GLFW_RELEASE) {
+        app->keyReleased(key, mods);
+    }
+}
