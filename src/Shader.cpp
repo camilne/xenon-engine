@@ -49,7 +49,7 @@ void xe::Shader::loadShaders(const std::string& vertexPath, const std::string& f
     glDeleteShader(fragmentId);
 }
 
-bool xe::Shader::loadAndCompileSource(const GLuint& sid, const std::string& filePath) {
+bool xe::Shader::loadAndCompileSource(GLuint sid, const std::string& filePath) {
     std::ifstream fileIn(filePath);
 
     if (fileIn.fail()) {

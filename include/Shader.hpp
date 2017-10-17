@@ -30,7 +30,7 @@ private:
     std::unordered_map<std::string, GLint> uniforms_;
 
     void loadShaders(const std::string& vertexPath, const std::string& fragmentPath);
-    bool loadAndCompileSource(const GLuint& sid, const std::string& filePath);
+    bool loadAndCompileSource(GLuint sid, const std::string& filePath);
     void createUniformIfNeeded(const std::string& name);
 };
 
