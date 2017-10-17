@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
 
     engine.createWindow(1280, 720, "My Basic Window");
     engine.attachRenderer(std::make_unique<Renderer>(1280, 720));
-    engine.run();
+    engine.run([](){});
 
     return 0;
 }

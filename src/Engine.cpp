@@ -16,7 +16,7 @@ void Engine::attachRenderer(std::unique_ptr<IRenderer> renderer) {
     renderer_ = std::move(renderer);
 }
 
-void Engine::run() {
+void Engine::run(std::function<void()> updateFunction) {
     if(!window_ || !renderer_)
         return;
 
@@ -39,6 +39,8 @@ void Engine::run() {
     glClearColor(0, 0, 1, 1);
 
     while (!window_->shouldClose()) {
+        updateFunction();
+
         renderer_->renderScene();
         GLuint frame = renderer_->getFrame();
         glBindTexture(GL_TEXTURE_2D, frame);

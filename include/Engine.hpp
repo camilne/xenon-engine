@@ -14,7 +14,7 @@ public:
 
     void createWindow(int width, int height, std::string title);
     void attachRenderer(std::unique_ptr<IRenderer> renderer);
-    void run();
+    void run(std::function<void()> updateFunction);
 private:
     std::unique_ptr<Window> window_;
     std::unique_ptr<IRenderer> renderer_;
