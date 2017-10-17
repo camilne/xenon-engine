@@ -1,5 +1,4 @@
 #include <glad/glad.h>
-#include <IRenderer.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/constants.hpp>
 #include <Shader.hpp>

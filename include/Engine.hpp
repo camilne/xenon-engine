@@ -4,7 +4,6 @@
 #include <memory>
 #include <glad/glad.h>
 #include "Window.hpp"
-#include "IRenderer.hpp"
 #include "IApplication.hpp"
 
 namespace xe {

@@ -2,7 +2,7 @@
 #define XENON_IAPPLICATION_HPP
 
 #include <memory>
-#include "IRenderer.hpp"
+#include <glad/glad.h>
 
 namespace xe {
 
