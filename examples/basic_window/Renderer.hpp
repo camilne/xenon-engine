@@ -3,6 +3,7 @@
 
 #include <IRenderer.hpp>
 #include <Shader.hpp>
+#include <glm/glm.hpp>
 
 class Renderer : public xe::IRenderer {
 public:
@@ -12,6 +13,10 @@ protected:
 private:
     GLuint mesh_;
     xe::Shader shader_;
+
+    glm::mat4 model_;
+    glm::mat4 view_;
+    glm::mat4 proj_;
 
     void init();
 };

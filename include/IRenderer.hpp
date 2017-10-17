@@ -13,10 +13,11 @@ public:
     GLuint getFrame() const;
     void renderScene();
 protected:
-    virtual void render() = 0;
-private:
     int width_;
     int height_;
+
+    virtual void render() = 0;
+private:
     GLuint frameBuffer_;
     GLuint renderedTexture_;
 

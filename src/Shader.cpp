@@ -85,3 +85,45 @@ bool xe::Shader::loadAndCompileSource(const GLuint& sid, const std::string& file
 
     return true;
 }
+
+void xe::Shader::createUniformIfNeeded(const std::string& name) {
+    if (uniforms_.find(name) == end(uniforms_)) {
+
+        GLint location = glGetUniformLocation(id_, name.c_str());
+        if (location < 0) {
+            std::cout << "Error locating uniform " << name << " in " << name_ << " shader." << std::endl;
+        }
+
+        uniforms_[name] = location;
+    }
+}
+
+void xe::Shader::setUniform(const std::string& name, const glm::mat3& val) {
+    createUniformIfNeeded(name);
+    glUniformMatrix3fv(uniforms_[name], 1, GL_FALSE, &val[0][0]);
+}
+
+void xe::Shader::setUniform(const std::string& name, const glm::mat4& val) {
+    createUniformIfNeeded(name);
+    glUniformMatrix4fv(uniforms_[name], 1, GL_FALSE, &val[0][0]);
+}
+
+void xe::Shader::setUniform(const std::string& name, const glm::vec3& val) {
+    createUniformIfNeeded(name);
+    glUniform3f(uniforms_[name], val.x, val.y, val.z);
+}
+
+void xe::Shader::setUniform(const std::string& name, const glm::vec2& val) {
+    createUniformIfNeeded(name);
+    glUniform2f(uniforms_[name], val.x, val.y);
+}
+
+void xe::Shader::setUniform(const std::string& name, GLfloat val) {
+    createUniformIfNeeded(name);
+    glUniform1f(uniforms_[name], val);
+}
+
+void xe::Shader::setUniform(const std::string& name, GLint val) {
+    createUniformIfNeeded(name);
+    glUniform1i(uniforms_[name], val);
+}
