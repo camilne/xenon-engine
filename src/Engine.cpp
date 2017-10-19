@@ -20,9 +20,9 @@ void Engine::run() {
     if(!window_ || !application_)
         return;
 
-    GLuint VertexArrayID;
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
+    GLuint vertexArrayId;
+    glGenVertexArrays(1, &vertexArrayId);
+    glBindVertexArray(vertexArrayId);
 
     GLuint frameVertices;
     glGenBuffers(1, &frameVertices);
