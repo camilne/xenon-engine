@@ -36,9 +36,10 @@ void Engine::run() {
     // TODO: Fix path hack
     Shader shader("../../shaders/pass_through");
 
-    glClearColor(0, 0, 1, 1);
+    glClearColor(0.4f, 0.3f, 0.8f, 1);
 
     window_->setKeyCallback(IApplication::keyCallback);
+    window_->setCursorPosCallback(Input::cursorPosCallback);
     window_->setWindowUserPointer(static_cast<void*>(application_.get()));
 
     application_->init();
@@ -47,6 +48,7 @@ void Engine::run() {
         application_->update();
 
         application_->preRender();
+        glClear(GL_COLOR_BUFFER_BIT);
         application_->render();
         application_->postRender();
 

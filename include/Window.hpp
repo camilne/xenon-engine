@@ -14,6 +14,7 @@ public:
 
     static void setErrorCallback(GLFWerrorfun callback);
     void setKeyCallback(GLFWkeyfun callback);
+    void setCursorPosCallback(GLFWcursorposfun callback);
 
     void setWindowUserPointer(void* pointer) const;
 

@@ -4,6 +4,7 @@
 #include <IApplication.hpp>
 #include <Shader.hpp>
 #include <glm/glm.hpp>
+#include <Camera.hpp>
 
 class Application : public xe::IApplication {
 public:
@@ -15,10 +16,9 @@ protected:
 private:
     GLuint mesh_;
     xe::Shader shader_;
+    xe::Camera camera_;
 
     glm::mat4 model_;
-    glm::mat4 view_;
-    glm::mat4 proj_;
 };
 
 

@@ -22,6 +22,10 @@ void Window::setKeyCallback(GLFWkeyfun callback) {
     glfwSetKeyCallback(handle_, callback);
 }
 
+void Window::setCursorPosCallback(GLFWcursorposfun callback) {
+    glfwSetCursorPosCallback(handle_, callback);
+}
+
 void Window::setWindowUserPointer(void* pointer) const {
     glfwSetWindowUserPointer(handle_, pointer);
 }
@@ -78,5 +82,4 @@ void Window::createWindowHandle() {
         glfwTerminate();
     }
 }
-
 }
