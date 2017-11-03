@@ -10,3 +10,6 @@ target_link_libraries(XenonModelLoading LINK_PUBLIC Xenon)
 
 configure_file(model_loading.vs model_loading.vs COPYONLY)
 configure_file(model_loading.fs model_loading.fs COPYONLY)
+
+# copy model
+file(COPY TARDIS DESTINATION ./)

@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <Camera.hpp>
 #include <Mesh.hpp>
+#include <Model.hpp>
 
 class Application : public xe::IApplication {
 public:
@@ -15,11 +16,9 @@ protected:
     virtual void update();
     virtual void render();
 private:
-    std::unique_ptr<Mesh> mesh_;
+    std::unique_ptr<Model> model_;
     xe::Shader shader_;
     xe::Camera camera_;
-
-    glm::mat4 model_;
 };
 
 

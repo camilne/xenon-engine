@@ -9,22 +9,17 @@ Application::Application(int width, int height)
 }
 
 void Application::init() {
-    Vertex v1 = {{-0.5f, -0.5f, 0.0f}};
-    Vertex v2 = {{ 0.5f, -0.5f, 0.0f}};
-    Vertex v3 = {{ 0.0f,  1.0f, 0.0f}};
-    mesh_ = std::make_unique<Mesh>(Mesh::createTriangle(v1, v2, v3));
-
     camera_.setSpeed(1.0);
     camera_.setSensitivity(0.3);
     camera_.setPosition(glm::vec3(1.0f, 1.0f, 2.0f));
     camera_.lookAt(glm::vec3(0.0f));
     camera_.update();
 
-    model_ = glm::mat4(1.0f);
+    model_  = std::make_unique<Model>("TARDIS/TARDIS.obj");
 
     shader_.bind();
     shader_.setUniform("m_proj", camera_.getProjection());
-    shader_.setUniform("m_model", model_);
+    shader_.setUniform("m_model", glm::mat4(1.0f));
 }
 
 void Application::update() {
@@ -36,5 +31,5 @@ void Application::render() {
     shader_.bind();
     shader_.setUniform("m_view", camera_.getView());
 
-    mesh_->render();
+    model_->render();
 }

@@ -28,7 +28,7 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLushort>& indices) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId_);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLushort), &indices[0], GL_STATIC_DRAW);
 
-    count_ = sizeof(indices);
+    count_ = indices.size();
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
