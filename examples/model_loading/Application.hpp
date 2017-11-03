@@ -5,6 +5,7 @@
 #include <Shader.hpp>
 #include <glm/glm.hpp>
 #include <Camera.hpp>
+#include <Mesh.hpp>
 
 class Application : public xe::IApplication {
 public:
@@ -14,7 +15,7 @@ protected:
     virtual void update();
     virtual void render();
 private:
-    GLuint mesh_;
+    std::unique_ptr<Mesh> mesh_;
     xe::Shader shader_;
     xe::Camera camera_;
 

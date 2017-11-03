@@ -3,18 +3,16 @@
 #include "Application.hpp"
 
 Application::Application(int width, int height)
-        : IApplication(width, height), shader_(xe::Shader("free_camera")),
+        : IApplication(width, height), shader_(xe::Shader("model_loading")),
           camera_{xe::Camera::createPerspective(70.0f, static_cast<float>(width) / height, 0.01f, 100.0f)} {
 
 }
 
 void Application::init() {
-    glGenBuffers(1, &mesh_);
-    const GLfloat vertices[] = {
-            -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.75f, 0.0f
-    };
-    glBindBuffer(GL_ARRAY_BUFFER, mesh_);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    Vertex v1 = {{-0.5f, -0.5f, 0.0f}};
+    Vertex v2 = {{ 0.5f, -0.5f, 0.0f}};
+    Vertex v3 = {{ 0.0f,  1.0f, 0.0f}};
+    mesh_ = std::make_unique<Mesh>(Mesh::createTriangle(v1, v2, v3));
 
     camera_.setSpeed(1.0);
     camera_.setSensitivity(0.3);
@@ -38,9 +36,5 @@ void Application::render() {
     shader_.bind();
     shader_.setUniform("m_view", camera_.getView());
 
-    glBindBuffer(GL_ARRAY_BUFFER, mesh_);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    mesh_->render();
 }
