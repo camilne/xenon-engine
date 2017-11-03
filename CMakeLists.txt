@@ -42,6 +42,14 @@ target_link_libraries(${PROJECT_NAME} "glad" "${CMAKE_DL_LIBS}")
 add_subdirectory(${LIB_DIR}/glm)
 include_directories(${LIB_DIR}/glm)
 
+# assimp
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
+add_subdirectory(${LIB_DIR}/assimp)
+include_directories(${LIB_DIR}/assimp/include)
+# hack to include config.h
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/lib/assimp/include)
+target_link_libraries(${PROJECT_NAME} assimp)
+
 # examples
 add_subdirectory(examples)
 
