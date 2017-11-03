@@ -26,11 +26,17 @@ void xe::IApplication::initFramebuffer() {
     GLenum drawBuffers[1] = {GL_COLOR_ATTACHMENT0};
     glDrawBuffers(1, drawBuffers);
 
+    GLuint depthrenderbuffer;
+    glGenRenderbuffers(1, &depthrenderbuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, depthrenderbuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width_, height_);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
+
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         // Logger::log(Logger::ERROR, "Display framebuffer is not complete");
         std::cerr << "Display framebuffer is not complete" << std::endl;
     }
-    
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 

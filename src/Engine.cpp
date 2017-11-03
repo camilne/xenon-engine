@@ -50,25 +50,25 @@ void Engine::run() {
     while (!window_->shouldClose()) {
         application_->update();
 
-        //application_->preRender();
+        application_->preRender();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         application_->render();
-        //application_->postRender();
+        application_->postRender();
 
-        //GLuint frame = application_->getFrame();
-        //glBindTexture(GL_TEXTURE_2D, frame);
+        GLuint frame = application_->getFrame();
+        glBindTexture(GL_TEXTURE_2D, frame);
 
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //shader.bind();
+        shader.bind();
 
-        //glEnableVertexAttribArray(0);
-        //glEnableVertexAttribArray(1);
-        //glBindBuffer(GL_ARRAY_BUFFER, frameVertices);
-        //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)0);
-        //glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, frameVertices);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)0);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
-        //glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         GLint error = glGetError();
         if(error != GL_NO_ERROR)
