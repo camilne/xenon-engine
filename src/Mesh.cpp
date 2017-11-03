@@ -1,7 +1,8 @@
 #include <iostream>
 #include "Mesh.hpp"
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLushort>& indices) {
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLushort>& indices, const std::vector<Texture>& textures)
+    : textures_{textures} {
     glGenBuffers(1, &vertexBufferId_);
     std::vector<GLfloat> arrVertices(vertices.size() * sizeof(Vertex));
     unsigned int offset = 0;
@@ -37,10 +38,12 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLushort>& indices) {
 Mesh::Mesh(Mesh&& mesh) {
     vertexBufferId_ = mesh.vertexBufferId_;
     elementBufferId_ = mesh.elementBufferId_;
+    textures_ = mesh.textures_;
     count_ = mesh.count_;
 
     mesh.vertexBufferId_ = 0;
     mesh.elementBufferId_ = 0;
+    mesh.textures_.clear();
 }
 
 Mesh&& Mesh::createTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3) {
@@ -50,6 +53,12 @@ Mesh&& Mesh::createTriangle(const Vertex& v1, const Vertex& v2, const Vertex& v3
 }
 
 void Mesh::render() const {
+    for(unsigned int i = 0; i < textures_.size(); ++i) {
+        glActiveTexture(GL_TEXTURE0 + i);
+        textures_[i].bind();
+    }
+    glActiveTexture(GL_TEXTURE0);
+
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);

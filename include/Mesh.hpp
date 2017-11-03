@@ -4,10 +4,11 @@
 #include <glad/glad.h>
 #include <vector>
 #include "Vertex.hpp"
+#include "Texture.hpp"
 
 class Mesh {
 public:
-    Mesh(std::vector<Vertex>& vertices, std::vector<GLushort>& indices);
+    Mesh(const std::vector<Vertex>& vertices, const std::vector<GLushort>& indices, const std::vector<Texture>& textures = {});
     Mesh(Mesh&& mesh);
 
     void render() const;
@@ -17,6 +18,7 @@ private:
     GLuint vertexBufferId_;
     GLuint elementBufferId_;
     GLsizei count_;
+    std::vector<Texture> textures_;
 };
 
 #endif //XENON_MESH_HPP

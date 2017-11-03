@@ -13,6 +13,7 @@ Model::Model(const std::string& path) {
         return;
     }
 
+    directory_ = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
 }
 
@@ -27,10 +28,10 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
     }
 }
 
-Mesh&& Model::processMesh(aiMesh* mesh, const aiScene* scene) const {
+Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) const {
     std::vector<Vertex> vertices;
     std::vector<GLushort> indices;
-    //std::vector<Texture> textures;
+    std::vector<Texture> textures;
 
     for(unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex vertex;
@@ -66,18 +67,26 @@ Mesh&& Model::processMesh(aiMesh* mesh, const aiScene* scene) const {
         }
     }
 
-    /*if (mesh->mMaterialIndex >= 0)
-    {
+    if (mesh->mMaterialIndex >= 0) {
         auto material = scene->mMaterials[mesh->mMaterialIndex];
-        auto diffuseMaps = loadMaterialTextures(material,
-                                                aiTextureType_DIFFUSE, "texture_diffuse");
+        std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE);
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        auto specularMaps = loadMaterialTextures(material,
-                                                 aiTextureType_SPECULAR, "texture_specular");
+        std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR);
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-    }*/
+    }
 
-    return std::move(Mesh(vertices, indices));
+    return Mesh(vertices, indices, textures);
+}
+
+std::vector<Texture> Model::loadMaterialTextures(const aiMaterial* mat, aiTextureType type) const {
+    std::vector<Texture> textures;
+    for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
+        aiString str;
+        mat->GetTexture(type, i, &str);
+        Texture texture(directory_ + "/" + str.C_Str());
+        textures.push_back(texture);
+    }
+    return textures;
 }
 
 void Model::render() const {

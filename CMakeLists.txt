@@ -50,6 +50,10 @@ include_directories(${LIB_DIR}/assimp/include)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/lib/assimp/include)
 target_link_libraries(${PROJECT_NAME} assimp)
 
+#stb
+include_directories(${LIB_DIR}/stb)
+file(COPY ${LIB_DIR}/stb DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/lib)
+
 # examples
 add_subdirectory(examples)
 

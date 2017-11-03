@@ -30,6 +30,8 @@ void xe::IApplication::initFramebuffer() {
         // Logger::log(Logger::ERROR, "Display framebuffer is not complete");
         std::cerr << "Display framebuffer is not complete" << std::endl;
     }
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void xe::IApplication::preRender() const {
